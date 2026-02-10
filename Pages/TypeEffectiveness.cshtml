@@ -1,0 +1,65 @@
+@page
+@model SuperEeveeDex.Pages.TypeEffectivenessModel
+@{
+    ViewData["Title"] = "Type Chart";
+}
+<h2>Battle Calculator</h2>
+
+@if (Model.CalculatedResult.HasValue)
+{
+    <div class="alert alert-info">
+        <h4>Multiplier: x@(Model.CalculatedResult)</h4>
+        <p>@Model.ResultMessage</p>
+    </div>
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label">Attacking Move Type</label>
+                    <select asp-for="SelectedAttackingTypeId" asp-items="Model.TypeOptions" class="form-select">
+                        <option value="">-- Select Move Type --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Defender Type 1</label>
+                    <select asp-for="SelectedDefendingType1Id" asp-items="Model.TypeOptions" class="form-select">
+                        <option value="">-- Select Primary Type --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Defender Type 2 (Optional)</label>
+                    <select asp-for="SelectedDefendingType2Id" asp-items="Model.TypeOptions" class="form-select">
+                        <option value="">-- None --</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Calculate Damage</button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Attacking</th>
+        <th>Defending</th>
+        <th>Multiplier</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var entry in Model.TypeChart)
+    {
+        <tr>
+            <td>@entry.AttackingType.Name</td>
+            <td>@entry.DefendingType.Name</td>
+            <td>@entry.Multiplier</td>
+        </tr>
+    }
+    </tbody>
+</table>
