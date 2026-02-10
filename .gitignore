@@ -96,5 +96,5 @@ dotnet-watch/
 
 
 appsettings*.json
-
 .idea/
+app.db
